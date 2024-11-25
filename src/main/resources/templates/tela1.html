@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Carros</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container mt-4">
+    <!-- Barra Superior -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <!-- Campo de pesquisa -->
+      <form th:action="@{/}" method="get" class="input-group w-50">
+        <input type="text" name="nome" class="form-control" placeholder="Pesquisar carro..." th:value="${nomePesquisa}">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit">
+            <img th:src="@{lupa-icon.png}" width="20"/>
+          </button>
+        </div>
+      </form>
+
+      <!-- Botões de ações -->
+      <div>
+        <a href="/login">
+          <img th:src="@{perfil-icon.png}" width="60">
+          Perfil
+        </a>
+
+        <a href="/adicionar">
+          <img th:src="@{add-icon.png}" width="60">
+          Adicionar Carro
+        </a>
+        <a href="/suporte">
+          <img th:src="@{suporte-icon.png}" width="60">
+          Suporte
+        </a>
+      </div>
+    </div>
+    <h1>Selecione dúvidas de cada carro</h1>
+    <!-- Seletor de Categoria -->
+    <form th:action="@{/}" method="get" class="mb-4">
+      <label for="car-category" class="form-label">Selecione a Categoria do Carro:</label>
+      <select class="form-control" name="categoria" id="car-category" onchange="this.form.submit()">
+        <option value="todos" th:selected="${categoriaSelecionada == null or categoriaSelecionada.equals('todos')}">Todos</option>
+        <option value="SUV" th:selected="${categoriaSelecionada == 'SUV'}">SUV</option>
+        <option value="Sedan" th:selected="${categoriaSelecionada == 'Sedan'}">Sedan</option>
+        <option value="Hatch" th:selected="${categoriaSelecionada == 'Hatch'}">Hatch</option>
+        <option value="Caminhonete" th:selected="${categoriaSelecionada == 'Caminhonete'}">Caminhonete</option>
+      </select>
+    </form>
+
+    <!-- Lista de Carros -->
+    <div class="row">
+      <div th:each="carro : ${carros}" class="col-md-4 mb-4">
+        <a  th:href="@{|/detalhes/${carro.id}}">
+          <div class="card">
+            <img th:src="@{${carro.foto}}" class="card-img-top" alt="Foto do Carro">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${carro.nome}"></h5>
+              <p class="card-text" th:text="${carro.descricao}"></p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FontAwesome Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <!-- Bootstrap JS (opcional se precisar de funcionalidades JS do Bootstrap) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

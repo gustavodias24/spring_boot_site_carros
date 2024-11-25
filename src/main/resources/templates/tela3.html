@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Carro</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome para estrelas -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Formulário para Adicionar Carro -->
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title mb-4">Adicionar Novo Carro</h3>
+        <form method="post" enctype="multipart/form-data" action="/adicionar">
+          <!-- Foto do Carro -->
+          <div class="form-group">
+            <label for="car-foto">Foto do Carro:</label>
+            <input type="text" class="form-control" id="car-foto" name="car-foto" placeholder="link da foto do carro" required>
+          </div>
+
+          <!-- Categoria do Carro -->
+          <div class="form-group">
+            <label for="car-category">Categoria do Carro:</label>
+            <select class="form-control" id="car-category" name="car-category" required>
+              <option value="">Selecione uma categoria</option>
+              <option value="suv">SUV</option>
+              <option value="sedan">Sedan</option>
+              <option value="hatch">Hatch</option>
+              <option value="caminhonete">Caminhonete</option>
+            </select>
+          </div>
+
+          <!-- Nome do Carro -->
+          <div class="form-group">
+            <label for="car-name">Nome do Carro:</label>
+            <input type="text" class="form-control" id="car-name" name="car-name" placeholder="Digite o nome do carro" required>
+          </div>
+
+          <!-- Descrição do Carro -->
+          <div class="form-group">
+            <label for="car-description">Descrição do Carro:</label>
+            <textarea class="form-control" id="car-description" name="car-description" rows="3" placeholder="Descreva o carro..." required></textarea>
+          </div>
+
+          <!-- Tempo de Uso -->
+          <div class="form-group">
+            <label for="car-usage-time">Tempo de Uso (em anos):</label>
+            <input type="number" class="form-control" id="car-usage-time" name="car-usage-time" placeholder="Digite o tempo de uso do carro" min="0" required>
+          </div>
+
+          <!-- Avaliação -->
+          <div class="form-group">
+            <label>Avalie o Carro:</label>
+
+            <!-- Avaliação de Pintura -->
+            <div class="mb-3">
+              <label>Pintura:</label>
+              <div class="star-rating" id="avaliacao-pintura">
+                <input type="hidden" name="avaliacaoPintura" id="avaliacaoPinturaInput">
+                <i class="far fa-star" data-category="pintura" data-rating="1"></i>
+                <i class="far fa-star" data-category="pintura" data-rating="2"></i>
+                <i class="far fa-star" data-category="pintura" data-rating="3"></i>
+              </div>
+            </div>
+
+            <!-- Avaliação de Freios -->
+            <div class="mb-3">
+              <label>Freios:</label>
+              <div class="star-rating" id="avaliacao-freios">
+                <input type="hidden" name="avaliacaoFreios" id="avaliacaoFreiosInput">
+                <i class="far fa-star" data-category="freios" data-rating="1"></i>
+                <i class="far fa-star" data-category="freios" data-rating="2"></i>
+                <i class="far fa-star" data-category="freios" data-rating="3"></i>
+              </div>
+            </div>
+
+            <!-- Avaliação de Pneus -->
+            <div class="mb-3">
+              <label>Pneus:</label>
+              <div class="star-rating" id="avaliacao-pneus">
+                <input type="hidden" name="avaliacaoPneus" id="avaliacaoPneusInput">
+                <i class="far fa-star" data-category="pneus" data-rating="1"></i>
+                <i class="far fa-star" data-category="pneus" data-rating="2"></i>
+                <i class="far fa-star" data-category="pneus" data-rating="3"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão de Enviar -->
+          <button type="submit" class="btn btn-primary">Adicionar Carro</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (opcional se precisar de funcionalidades JS do Bootstrap) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Script para avaliação com estrelas -->
+  <script>
+    $(document).ready(function() {
+      // Função de clique para avaliar as estrelas
+      $('.star-rating i').on('click', function() {
+        const category = $(this).data('category');
+        const rating = $(this).data('rating');
+
+        // Limpa todas as estrelas anteriores para a categoria
+        $(`.star-rating i[data-category="${category}"]`).removeClass('fas').addClass('far');
+
+        // Adiciona a classe 'fas' até o número de estrelas clicado
+        $(`.star-rating i[data-category="${category}"]:lt(${rating})`).removeClass('far').addClass('fas');
+
+        // Atualiza o valor no input escondido
+        $(`#avaliacao${capitalizeFirstLetter(category)}Input`).val(rating);
+      });
+
+      // Função para capitalizar a primeira letra de uma string
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+    });
+  </script>
+</body>
+</html>

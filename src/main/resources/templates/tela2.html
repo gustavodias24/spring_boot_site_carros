@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizar Carro</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+
+    <a href="/">voltar</a>
+    <!-- Imagem do Carro e Descrição -->
+    <div class="card mb-4">
+      <img th:src="${carro.foto}" class="img-fluid" alt="Imagem do Carro">
+      <div class="card-body">
+        <h3 class="card-title" th:text="${carro.nome}">Nome do Carro</h3>
+        <p class="card-text" th:text="${carro.descricao}">
+          Descrição do carro: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+      </div>
+    </div>
+
+    <!-- Seção de Comentários -->
+    <div class="mb-4">
+      <h4>Comentários dos Usuários</h4>
+      <ul class="list-group">
+        <!-- Aqui você pode adicionar lógica para exibir comentários relacionados ao carro -->
+      </ul>
+    </div>
+
+    <div class="mb-4">
+      <h4>Comentários dos Usuários</h4>
+      <ul class="list-group">
+          <!-- Iterando sobre os comentários -->
+          <li th:each="comentario : ${comentarios}" class="list-group-item">
+              <strong th:text="${comentario.nomeUsuario} + ':'"></strong>
+              <p th:text="${comentario.texto}"></p>
+          </li>
+      </ul>
+  </div>
+
+    <!-- Formulário para Novo Comentário -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Deixe seu comentário</h5>
+        <form th:action="@{/detalhes/{id}/comentario(id=${carro.id})}" method="post">
+          <div class="form-group">
+              <label for="user-comment">Comentário</label>
+              <textarea class="form-control" name="comentario" id="user-comment" rows="3" placeholder="Escreva seu comentário..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar Comentário</button>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (opcional se precisar de funcionalidades JS do Bootstrap) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
